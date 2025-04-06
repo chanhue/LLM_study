@@ -30,3 +30,19 @@ class DailyQuests(BaseModel):
 class QuestOutput(BaseModel):
     user_id: str
     daily_quests: DailyQuests
+
+class HealthInput(BaseModel):
+    user_id: str
+    gender: str
+    chronic: str = ""
+    height: float = None
+    weight: float = None
+    muscle_mass: float = None
+    body_fat: float = None
+    pushups: int = None
+    situps: int = None
+    running_pace: float = None
+    running_time: float = None
+    squat: float = None
+    bench_press: float = None
+    deadlift: float = None
