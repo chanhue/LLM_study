@@ -37,6 +37,49 @@ quest_prompt = ChatPromptTemplate.from_template(
   }}
 }}
 
+답변은 반드시 Json으로만 출력해줘.
+"""
+)
 
+status_prompt = ChatPromptTemplate.from_template(
+"""
+너는 신체 스펙 데이터와 운동 수행능력 데이터를 받아서 스펙으로 반환해줄거야 
+입력 데이터는 
+{input_data}
+다음과 같은 json 데이터야
+
+입력된 정보들을 가지고 스탯을 계산해줘
+strength: 스쿼트, 벤치프레스, 데드리프트 무게를 기반으로 계산, 높은 무게를 들수록 높은 점수를 얻습니다. 
+
+endurance: 팔굽혀펴기, 윗몸일으키기 횟수를 기반으로 계산 많은 횟수를 할수록 높은 점수를 얻습니다. 
+
+speed: 달리기 페이스를 기반으로 숫자가 낮을수록 높은 점수를 얻습니다. 
+
+flexibility : 기본으로 50 값으로설절됩니다. 
+
+stamina: 달리기 시간을 기반으로 계산되었습니다. 오래 달릴수록 높은 점수를 얻습니다. 또한 endurance점수와 speed점수를 적절히 반영합니다. 
+
+character_type: strength, endurance, speed, flexibility, stamina 점수를 종합적으로 고려하여 판단 (높다는 기준은 다른 스탯 평균보다 20%이상 수치를 가질때)
+{{
+runner	러닝 페이스 & 유지 시간이 높음
+power    근력이 높음
+diet 	체지방률이 높아 유산소를 주로 수행해야 하는 체형
+balance	전반적인 운동 능력이 균등하게 분포되어있음
+endurance	팔굽혀펴기 & 윗몸일으키기 반복 횟수가 많음
+}}
+
+만약 입력이 들어올 때 값이 없는 항목이 있으면 내가 준 gender 별 기준값으로 채워서 사용해줘
+출력형식은 다음과 같아
+{{
+  "user_id": "12345",
+  "chronic" : "척추 측만증",
+  "strength": <strength>,
+  "endurance": <endurance>,
+  "speed": <speed>,
+  "flexibility": <flexibility>,
+  "stamina": <stamina>,
+  "character_type": "power"
+}}
+답변은 반드시 JSON 그 자체만 출력해 주세요.
 """
 )
